@@ -8,11 +8,36 @@ public class Driver {
 	
 	public static void main(String[] args) throws NumberFormatException, IOException, InterruptedException {
 		
+		System.out.println("How many dice?");
+		int amount = readIn();
+		System.out.println("How many sides?");
+		int sides = readIn();
+		long tStart = System.currentTimeMillis();
+		Cup cup = new Cup(amount, sides);
+		cup.rollAll();
+		int[] report = cup.getReport();
+		while (!cup.yahtzee(0)) {
+			cup.rollAll();
+		}
+		System.out.println("Yahtzee!");
+		for (int i = 0; i < amount; i++) {
+			System.out.println(report[i]);
+		}
+		System.out.println("Rolls: " + cup.getRollCount());
+		System.out.println("Sum: " + cup.sum());
+		System.out.println(cup.yahtzee(0));
+		long tEnd = System.currentTimeMillis();
+		long tElap = tEnd - tStart;
+		double elapsed = tElap / 1000.0;
+		System.out.println("Elapsed Time: " + elapsed);
+		return;
+	}
+
+	public static int readIn() throws IOException, InterruptedException {
 		int amount = 0;
 		boolean isnum = false;
 		int idiot = 0;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("How many dice?");
 		while (isnum == false) {
 			try {
 				amount = Integer.parseInt(br.readLine());
@@ -43,31 +68,10 @@ public class Driver {
 					System.out.println("Fuck you.");
 					Thread.sleep(3000);
 					System.err.println("Program Terminated");
-					return;
+					return 0;
 				}
-			
 			}
 		}
-		int sides = 100;
-		long tStart = System.currentTimeMillis();
-		Cup cup = new Cup(amount, sides);
-		cup.rollAll();
-		int[] report = cup.getReport();
-		while (!cup.yahtzee(0)) {
-			cup.rollAll();
-		}
-		System.out.println("Yahtzee!");
-		for (int i = 0; i < amount; i++) {
-			System.out.println(report[i]);
-		}
-		System.out.println("Rolls: " + cup.getRollCount());
-		System.out.println("Sum: " + cup.sum());
-		System.out.println(cup.yahtzee(0));
-		long tEnd = System.currentTimeMillis();
-		long tElap = tEnd - tStart;
-		double elapsed = tElap / 1000.0;
-		System.out.println("Elapsed Time: " + elapsed);
-		return;
+		return amount;
 	}
-
 }
