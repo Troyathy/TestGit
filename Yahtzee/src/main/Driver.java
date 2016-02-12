@@ -9,9 +9,17 @@ public class Driver {
 	public static void main(String[] args) throws NumberFormatException, IOException, InterruptedException {
 		
 		System.out.println("How many dice?");
-		int amount = readIn();
+		int temp= readIn("dice");
+		if (temp == 0) {
+			return;
+		}
+		int amount = temp;
 		System.out.println("How many sides?");
-		int sides = readIn();
+		temp = readIn("sides");
+		if (temp == 0) {
+			return;
+		}
+		int sides = temp;
 		long tStart = System.currentTimeMillis();
 		Cup cup = new Cup(amount, sides);
 		cup.rollAll();
@@ -33,7 +41,7 @@ public class Driver {
 		return;
 	}
 
-	public static int readIn() throws IOException, InterruptedException {
+	public static int readIn(String var) throws IOException, InterruptedException {
 		int amount = 0;
 		boolean isnum = false;
 		int idiot = 0;
@@ -49,7 +57,7 @@ public class Driver {
 					Thread.sleep(500);
 					System.out.println("Try again.");
 					Thread.sleep(500);
-					System.out.println("How many dice?");
+					System.out.println("How many " + var + "?");
 				} else {
 					System.out.println("...");
 					Thread.sleep(2000);
